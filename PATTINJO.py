@@ -32,9 +32,6 @@ kamus = [
 POP_SIZE = 6
 MUTATION_RATE = 0.2
 ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-
-# --- BARU: batas maksimal generasi supaya loop otomatis tidak berjalan
-#     selamanya kalau target sulit ditemukan (misal huruf langka / typo).
 MAX_GENERASI = 100
 
 target_word = None
@@ -47,9 +44,7 @@ parents = []
 children_crossover = []
 children_mutasi = []
 
-# --- BARU: menyimpan histori individu terbaik tiap generasi, dipakai
-#     untuk menampilkan grafik/ringkasan perkembangan fitness di menu 11.
-riwayat_terbaik = []   # list of tuple (generasi_ke, individu_terbaik, fitness_terbaik)
+riwayat_terbaik = []   
 
 
 # 3. MENU 1: TAMPILKAN KAMUS
@@ -250,11 +245,6 @@ def mutasi():
     print("\nPopulasi anak setelah mutasi:", children_mutasi)
 
 
-# 10. MENU 9: GENERASI BARU (regenerasi populasi + evaluasi)
-#     --- DIKEMBANGKAN: sekarang mengembalikan (individu_terbaik, fitness_terbaik,
-#         status_ketemu) supaya bisa dipakai oleh loop otomatis di menu 11,
-#         dan mencatat riwayat setiap generasi ke `riwayat_terbaik`.
-
 def generasi_baru():
     global population, generasi_ke
     if not children_mutasi:
@@ -284,10 +274,6 @@ def generasi_baru():
     return best_ind, best_fit, ketemu
 
 
-# --- BARU: satu paket "siklus regenerasi" (seleksi -> crossover -> mutasi ->
-#     generasi baru) yang dipanggil berulang oleh menu 11 tanpa perlu
-#     interaksi input dari pengguna di setiap tahap.
-
 def satu_siklus_regenerasi():
     hasil_fitness()
     seleksi_roulette()
@@ -314,14 +300,6 @@ def jalankan_algoritma_genetika():
           "melanjutkan otomatis ke generasi-generasi berikutnya, "
           "atau tekan menu 6-7-8-9 secara manual satu per satu.)")
 
-
-# --- BARU: MENU 11 - LANJUTKAN OTOMATIS SAMPAI KETEMU / GENERASI MAKSIMAL
-#     Ini jawaban untuk kasus seperti kata "PAMMUTTU" yang di Generasi ke-1
-#     baru mencapai fitness 0.62 (belum sama persis). Fungsi ini akan terus
-#     mengulang siklus regenerasi (seleksi-crossover-mutasi-generasi baru)
-#     secara otomatis, generasi demi generasi, sampai:
-#       a) individu terbaik == target_word (fitness sempurna 1.00), atau
-#       b) jumlah generasi mencapai MAX_GENERASI (supaya tidak infinite loop).
 
 def lanjutkan_otomatis():
     if target_word is None or not population:
