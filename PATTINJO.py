@@ -362,8 +362,8 @@ def main():
         print("7. Cross Over")
         print("8. Mutasi")
         print("9. Generasi Baru (1 langkah manual)")
-        print("10. Keluar")
-        print("11. Lanjutkan Otomatis Hingga Ketemu / Generasi Maksimal")
+        print("10. Lanjutkan Otomatis Hingga Ketemu / Generasi Maksimal")
+        print("11. Keluar")
 
         pilihan = input("Pilih menu (1-11): ").strip()
 
@@ -386,13 +386,11 @@ def main():
         elif pilihan == "9":
             generasi_baru()
         elif pilihan == "10":
-            print("Terima kasih. Program selesai.")
-            break
-        elif pilihan == "11":
-            lanjutkan_otomatis()
-        else:
             print("Pilihan tidak valid, silakan coba lagi.")
-
+            lanjutkan_otomatis()
+        elif pilihan == "11":
+            print("Terimakasih. Program selesai.")
+            break
 
 if __name__ == "__main__":
     main()
